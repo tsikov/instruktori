@@ -1,0 +1,4 @@
+asset 'jquery-ujs'
+asset 'angular'
+asset 'd3'
+asset 'bootstrap-sass-official'
