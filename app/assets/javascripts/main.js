@@ -1,0 +1,2 @@
+instruktori = angular.module('instruktori',[]);
+
