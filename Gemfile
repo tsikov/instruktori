@@ -15,8 +15,9 @@ gem 'coffee-rails', '~> 4.1.0'
 # gem 'therubyracer', platforms: :ruby
 
 gem 'jbuilder', '~> 2.0'
-
-gem 'bower-rails'
+gem 'jquery-rails'
+gem 'd3-rails'
+gem 'angularjs-rails'
 
 # bundle exec rake doc:rails generates the API under doc/api.
 gem 'sdoc', '~> 0.4.0', group: :doc
