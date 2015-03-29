@@ -4,6 +4,7 @@ module Api
       respond_to :json
 
       def index
+        @instructors = Instructor.paginate(:page => params[:page])
       end
 
     end

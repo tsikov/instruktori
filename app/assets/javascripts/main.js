@@ -1,4 +1,4 @@
-instruktori = angular.module("instruktori", ["ui.router", "templates"]);
+instruktori = angular.module("instruktori", ["ngResource", "ui.router", "templates"]);
 
 instruktori.config(["$stateProvider", "$urlRouterProvider", "$locationProvider",
                    function($stateProvider, $urlRouterProvider, $locationProvider) {
@@ -21,29 +21,15 @@ instruktori.config(["$stateProvider", "$urlRouterProvider", "$locationProvider",
 
 }]);
 
-//instruktori.factory("Instructor", ["$resource", function($resource) {
-  //return $resource('/api/v1/instructors/:id', null, {
-    //"query": {
-      //method: "GET",
-      //isArray: false,
+instruktori.factory("Instructors", ["$resource", function($resource) {
+  return $resource('/api/v1/instructors/:id', null, {
+  });
+}]);
 
-      //transformResponse: function(data) {
-        //data = JSON.parse(data);
+instruktori.controller("InstructorsController", ["$scope", "Instructors", function($scope, Instructors) {
 
-        //data.comments = data.comments.map(function(c) {
-          //return {
-            //id: c.id,
-          //}
-        //});
-
-        //return data;
-      //}
-    //},
-  //});
-//}]);
-
-instruktori.controller("InstructorsController", ["$scope", function($scope) {
-
-  $scope.test = "dsdasd";
+  $scope.instructors = Instructors.query();
 
 }]);
+
+
