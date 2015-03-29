@@ -1,3 +1,4 @@
+asset 'jquery'
 asset 'jquery-ujs'
 asset 'angular'
 asset 'd3'

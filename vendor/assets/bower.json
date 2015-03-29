@@ -1,6 +1,7 @@
 {
   "name": "dsl-generated dependencies",
   "dependencies": {
+    "jquery": "latest",
     "jquery-ujs": "latest",
     "angular": "latest",
     "d3": "latest",
