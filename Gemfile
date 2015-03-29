@@ -39,6 +39,8 @@ gem 'responders', '~> 2.0'
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
+gem 'capistrano', '~> 3.3.0'
+
 gem 'puma'
 
 group :development, :test do
