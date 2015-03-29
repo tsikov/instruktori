@@ -13,6 +13,7 @@
 //
 //= require jquery2
 //= require jquery_ujs
+//= require bootstrap-sprockets
 //= require angular
 //= require angular-resource
 //= require angular-ui-router

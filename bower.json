@@ -10,7 +10,6 @@
       "angular": "latest",
       "angular-resource": "latest",
       "angular-ui-router": "latest",
-      "bootstrap-sass-official": "latest"
     }
   }
 }

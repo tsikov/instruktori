@@ -19,6 +19,8 @@ gem 'jbuilder', '~> 2.0'
 gem 'jquery-rails'
 gem 'd3-rails'
 
+gem 'bootstrap-sass', '~> 3.3.4'
+
 gem 'bower-rails'
 gem 'angular-rails-templates'
 
