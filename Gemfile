@@ -25,6 +25,9 @@ gem 'bower-rails'
 gem 'angular-rails-templates'
 gem 'will_paginate', '~> 3.0.6'
 
+
+gem 'data_sync'
+
 # bundle exec rake doc:rails generates the API under doc/api.
 gem 'sdoc', '~> 0.4.0', group: :doc
 
