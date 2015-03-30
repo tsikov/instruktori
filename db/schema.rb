@@ -11,10 +11,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150309115211) do
+ActiveRecord::Schema.define(version: 20150316141209) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "exams", force: :cascade do |t|
+    t.integer  "protocol"
+    t.date     "date"
+    t.string   "examiner"
+    t.integer  "kind"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "instructors", force: :cascade do |t|
     t.string   "name"
@@ -29,4 +38,19 @@ ActiveRecord::Schema.define(version: 20150309115211) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "results", force: :cascade do |t|
+    t.integer  "exam_id"
+    t.integer  "instructor_id"
+    t.integer  "result"
+    t.string   "student_name"
+    t.string   "notes"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+  end
+
+  add_index "results", ["exam_id"], name: "index_results_on_exam_id", using: :btree
+  add_index "results", ["instructor_id"], name: "index_results_on_instructor_id", using: :btree
+
+  add_foreign_key "results", "exams"
+  add_foreign_key "results", "instructors"
 end

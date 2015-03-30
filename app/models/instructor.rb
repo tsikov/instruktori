@@ -1,3 +1,5 @@
 class Instructor < ActiveRecord::Base
-end
 
+  has_many :results
+
+end
