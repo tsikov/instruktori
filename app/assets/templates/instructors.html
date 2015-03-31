@@ -1,5 +1,5 @@
 <ul>
-  <li ng-repeat="instructor in instructorsData.instructors">{{ instructor.name }}</li>
+  <li ng-repeat="instructor in instructorsData.instructors"><a href="/instructors/{{ instructor.id }}">{{ instructor.name }}</a></li>
 </ul>
 
 <pagination total-items="instructorsData.instructors_count" max-size="10" ng-model="instructorsData.page" ng-change="pageChanged()"></pagination>

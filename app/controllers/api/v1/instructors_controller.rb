@@ -14,6 +14,10 @@ module Api
         @instructors = query.paginate(:page => @page)
       end
 
+      def show
+        @instructor = Instructor.find(params[:id])
+      end
+
     end
   end
 end

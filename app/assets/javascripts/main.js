@@ -3,11 +3,16 @@ instruktori = angular.module("instruktori", ["ngResource", "ui.router", "templat
 instruktori.config(["$stateProvider", "$urlRouterProvider", "$locationProvider",
                    function($stateProvider, $urlRouterProvider, $locationProvider) {
 
-  $stateProvider.
-  state("instructors", {
+  $stateProvider
+  .state("instructors", {
     url: "/",
     templateUrl: "instructors.html",
-    controller: "InstructorsController"
+    controller: "InstructorsIndexController"
+  })
+  .state("instructor", {
+    url: "/instructors/:instructorId",
+    templateUrl: "instructor.html",
+    controller: "InstructorsShowController"
   });
 
   // default fall back route
@@ -21,7 +26,7 @@ instruktori.config(["$stateProvider", "$urlRouterProvider", "$locationProvider",
 
 }]);
 
-instruktori.factory("Instructors", ["$resource", function($resource) {
+instruktori.factory("Instructor", ["$resource", function($resource) {
   return $resource('/api/v1/instructors/:id', null, {
     'query': {
       method: "GET",
@@ -43,13 +48,21 @@ instruktori.factory("Instructors", ["$resource", function($resource) {
   });
 }]);
 
-instruktori.controller("InstructorsController", ["$scope", "Instructors", function($scope, Instructors) {
+instruktori.controller("InstructorsIndexController", ["$scope", "Instructor", function($scope, Instructor) {
 
-  $scope.instructorsData = Instructors.query();
+  $scope.instructorsData = Instructor.query();
 
   $scope.pageChanged = function() {
-    $scope.instructorsData = Instructors.query({ page: $scope.instructorsData.page });
+    $scope.instructorsData = Instructor.query({ page: $scope.instructorsData.page });
   };
+
+}]);
+
+instruktori.controller("InstructorsShowController", ["$scope", "$stateParams", "Instructor",
+                       function($scope, $stateParams, Instructor) {
+
+                         console.log($stateParams);
+  $scope.instructor = Instructor.get({ id: $stateParams.instructorId });
 
 }]);
 
