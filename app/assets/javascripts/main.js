@@ -1,4 +1,4 @@
-instruktori = angular.module("instruktori", ["ngResource", "ui.router", "templates"]);
+instruktori = angular.module("instruktori", ["ngResource", "ui.router", "templates", "ui.bootstrap"]);
 
 instruktori.config(["$stateProvider", "$urlRouterProvider", "$locationProvider",
                    function($stateProvider, $urlRouterProvider, $locationProvider) {
