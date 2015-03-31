@@ -4,10 +4,19 @@ module Api
       respond_to :json
 
       def index
-        @instructors = Instructor.paginate(:page => params[:page])
+        if params[:page].blank?
+          @page = 1
+        else
+          @page = params[:page].to_i
+        end
+        query = Instructor.all
+        @instructors_count = query.count
+        @instructors = query.paginate(:page => @page)
       end
 
     end
   end
 end
+
+# TODO whitelist
 

@@ -23,12 +23,33 @@ instruktori.config(["$stateProvider", "$urlRouterProvider", "$locationProvider",
 
 instruktori.factory("Instructors", ["$resource", function($resource) {
   return $resource('/api/v1/instructors/:id', null, {
+    'query': {
+      method: "GET",
+      isArray: false,
+
+      transformResponse: function(data) {
+        data = JSON.parse(data);
+
+        data.instructors = data.instructors.map(function(i) {
+          return {
+            id: i.id,
+            name: i.name
+          }
+        });
+
+        return data;
+      }
+    }
   });
 }]);
 
 instruktori.controller("InstructorsController", ["$scope", "Instructors", function($scope, Instructors) {
 
-  $scope.instructors = Instructors.query();
+  $scope.instructorsData = Instructors.query();
+
+  $scope.pageChanged = function() {
+    $scope.instructorsData = Instructors.query({ page: $scope.instructorsData.page });
+  };
 
 }]);
 
