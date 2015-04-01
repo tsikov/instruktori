@@ -1,11 +1,22 @@
 instruktori = angular.module("instruktori", ["ngResource", "ui.router", "templates", "ui.bootstrap"]);
 
+instruktori.run(["$rootScope", "$location", function($rootScope, $location) {
+
+  $rootScope.$on('$stateChangeStart', function(e, toState, toParams, fromState, fromParams) {
+    if (typeof toParams.goto !== "undefined") {
+      $location.url(toParams.goto);
+    }
+    return;
+  });
+
+}]);
+
 instruktori.config(["$stateProvider", "$urlRouterProvider", "$locationProvider",
                    function($stateProvider, $urlRouterProvider, $locationProvider) {
 
   $stateProvider
   .state("instructors", {
-    url: "/",
+    url: "/?goto",
     templateUrl: "instructors.html",
     controller: "InstructorsIndexController"
   })
@@ -20,8 +31,7 @@ instruktori.config(["$stateProvider", "$urlRouterProvider", "$locationProvider",
 
   // enable HTML5 Mode for SEO
   $locationProvider.html5Mode({
-    enabled: true,
-    requireBase: false
+    enabled: true
   });
 
 }]);
