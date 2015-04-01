@@ -1,4 +1,4 @@
-json.instructors @instructors, :id, :name, :created_at
+json.instructors @instructors, :id, :name, :city, :categories, :created_at
 
 json.instructors_count @instructors_count
 json.pages_count (@instructors_count.to_f/Instructor.per_page).ceil

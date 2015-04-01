@@ -31,19 +31,6 @@ instruktori.factory("Instructor", ["$resource", function($resource) {
     'query': {
       method: "GET",
       isArray: false,
-
-      transformResponse: function(data) {
-        data = JSON.parse(data);
-
-        data.instructors = data.instructors.map(function(i) {
-          return {
-            id: i.id,
-            name: i.name
-          }
-        });
-
-        return data;
-      }
     }
   });
 }]);
@@ -61,7 +48,6 @@ instruktori.controller("InstructorsIndexController", ["$scope", "Instructor", fu
 instruktori.controller("InstructorsShowController", ["$scope", "$stateParams", "Instructor",
                        function($scope, $stateParams, Instructor) {
 
-                         console.log($stateParams);
   $scope.instructor = Instructor.get({ id: $stateParams.instructorId });
 
 }]);
