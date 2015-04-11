@@ -1,2 +1,22 @@
+<h1>{{ instructor.name }}</h1>
 
-{{ instructor }}
+<table class="table">
+  <tr>
+    <td>телефон</td>
+    <td>{{ instructor.phone }}</td>
+  </tr>
+  <tr>
+    <td>aдрес</td>
+    <td>{{ instructor.address }}</td>
+  </tr>
+  <tr>
+    <td>град</td>
+    <td>{{ instructor.city }}</td>
+  </tr>
+  <tr>
+    <td>категории</td>
+    <td>{{ instructor.categories }}</td>
+  </tr>
+</table>
+
+<results-list results-data="resultsData"></results-list>
