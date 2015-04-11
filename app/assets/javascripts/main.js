@@ -62,31 +62,33 @@ instruktori.directive("resultsList", ["$window", "Result", "$stateParams", funct
       resultsData: "="
     },
     link: function(scope, element, attrs) {
-
-      var width = parseInt(attrs.width) || 400,
-          height = parseInt(attrs.barHeight) || 400,
-          margin = parseInt(attrs.margin) || 2;
       var d3 = $window.d3;
       var rawSvg = element.find("svg")[0];
       var svg = d3.select(rawSvg);
 
       function render(data) {
+        var margin = 2;
+        var resultsPerRow = 10;
+
         svg.selectAll('rect')
         .data(data).enter()
           .append('rect')
           .attr({
             height: 10,
             width: 10,
-            x: 0,
+            x: function(d, i) {
+              var x = (i * 12) % (resultsPerRow * 12);
+              return x;
+            },
             y: function(d, i) {
-              return i * (10 + margin);
+              if(i === 0) {
+                return 0;
+              } else {
+                return Math.floor(i/resultsPerRow)*12
+              }
             },
             fill: function(d) {
-              if(d.result === 0) {
-                return "green";
-              } else {
-                return "red";
-              }
+              return d.result === 0 ? "green" : "red";
             }
           });
       };
