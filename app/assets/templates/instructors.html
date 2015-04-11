@@ -2,11 +2,12 @@
 <table class="table table-bordered">
   <tr ng-repeat="instructor in instructorsData.instructors">
     <td><a href="/instructors/{{ instructor.id }}">{{ instructor.name }}</a></td>
+    <td>{{ instructor.score }}</td>
     <td>{{ instructor.city }}</td>
     <td>{{ instructor.categories }}</td>
   </tr>
 </table>
 
-
 <pagination total-items="instructorsData.instructors_count" max-size="10" ng-model="instructorsData.page" ng-change="pageChanged()"></pagination>
+
 
