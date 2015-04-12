@@ -9,7 +9,9 @@
     "dependencies": {
       "angular": "latest",
       "angular-resource": "latest",
-      "angular-ui-router": "latest"
+      "angular-ui-router": "latest",
+      "d3": "latest",
+      "d3-tip": "latest"
     }
   }
 }
