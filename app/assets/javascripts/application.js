@@ -21,6 +21,7 @@
 //= require angular-ui-bootstrap-tpls
 //= require angular-rails-templates
 //= require d3
+//= require d3-tip
 //= require_tree .
 //= require_tree ../templates
 

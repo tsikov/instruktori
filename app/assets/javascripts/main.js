@@ -69,6 +69,14 @@ instruktori.directive("resultsList", ["$window", "Result", "$stateParams", funct
       function render(data) {
         var margin = 2;
         var resultsPerRow = 10;
+        var tip = d3.tip()
+          .attr('class', 'd3-tip')
+          .offset([-10, 0])
+          .html(function(d) {
+            return "<strong>Frequency:</strong> <span style='color:red'>" + d.student_name + "</span>";
+          });
+
+        svg.call(tip);
 
         svg.selectAll('rect')
         .data(data).enter()
@@ -84,13 +92,15 @@ instruktori.directive("resultsList", ["$window", "Result", "$stateParams", funct
               if(i === 0) {
                 return 0;
               } else {
-                return Math.floor(i/resultsPerRow)*12
+                return Math.floor(i/resultsPerRow)*12;
               }
             },
             fill: function(d) {
               return d.result === 0 ? "green" : "red";
             }
-          });
+          })
+          .on("mouseover", tip.show)
+          .on("mouseout", tip.hide);
       };
 
       scope.resultsData.$promise.then(function(data) {
