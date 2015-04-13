@@ -16,7 +16,7 @@ instruktori.config(["$stateProvider", "$urlRouterProvider", "$locationProvider",
 
   $stateProvider
   .state("instructors", {
-    url: "/?goto",
+    url: "/?goto?page",
     templateUrl: "instructors.html",
     controller: "InstructorsIndexController"
   })
@@ -111,11 +111,11 @@ instruktori.directive("resultsList", ["$window", "Result", "$stateParams", funct
   }
 }]);
 
-instruktori.controller("InstructorsIndexController", ["$scope", "Instructor", function($scope, Instructor) {
+instruktori.controller("InstructorsIndexController", ["$scope", "$state", "Instructor", function($scope, $state, Instructor) {
 
-  $scope.instructorsData = Instructor.query();
+  $scope.instructorsData = Instructor.query({ page: $state.params.page });
   $scope.pageChanged = function() {
-    $scope.instructorsData = Instructor.query({ page: $scope.instructorsData.page });
+    $state.go("instructors", { page: $scope.instructorsData.page })
   };
 
 }]);
