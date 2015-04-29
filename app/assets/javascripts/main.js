@@ -84,27 +84,16 @@ instruktori.directive("resultsList", ["$window", "Result", "$stateParams", funct
           .attr({
             height: 10,
             width: 10,
-            x: function(d, i) {
-              var x = (i * 12) % (resultsPerRow * 12);
-              return x;
-            },
-            y: function(d, i) {
-              if(i === 0) {
-                return 0;
-              } else {
-                return Math.floor(i/resultsPerRow)*12;
-              }
-            },
-            fill: function(d) {
-              return d.result === 0 ? "green" : "red";
-            }
+            x: function(d, i) { return (i * 12) % (resultsPerRow * 12); },
+            y: function(d, i) { return i === 0 ? 0 : Math.floor(i/resultsPerRow)*12; },
+            fill: function(d) { return d.result === 0 ? "green" : "red"; }
           })
           .on("mouseover", tip.show)
           .on("mouseout", tip.hide);
       };
 
       scope.resultsData.$promise.then(function(data) {
-        render(data.results)
+        render(data.results);
       });
 
     }
@@ -114,8 +103,9 @@ instruktori.directive("resultsList", ["$window", "Result", "$stateParams", funct
 instruktori.controller("InstructorsIndexController", ["$scope", "$state", "Instructor", function($scope, $state, Instructor) {
 
   $scope.instructorsData = Instructor.query({ page: $state.params.page });
-  $scope.pageChanged = function() {
-    $state.go("instructors", { page: $scope.instructorsData.page })
+  $scope.pageChanged = function(page) {
+    $scope.params.page = page;
+    $state.go("instructors", $scope.params);
   };
 
 }]);
