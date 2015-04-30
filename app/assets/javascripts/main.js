@@ -102,11 +102,21 @@ instruktori.directive("resultsList", ["$window", "Result", "$stateParams", funct
 
 instruktori.controller("InstructorsIndexController", ["$scope", "$state", "Instructor", function($scope, $state, Instructor) {
 
+  $scope.params = {
+    page: $state.params.page,
+    city: "all"
+  }
+
   $scope.instructorsData = Instructor.query({ page: $state.params.page });
   $scope.pageChanged = function(page) {
     $scope.params.page = page;
     $state.go("instructors", $scope.params);
   };
+
+  $scope.cityChanged = function(city) {
+    $scope.params.city = city;
+    $state.go("instructors", $scope.params);
+  }
 
 }]);
 

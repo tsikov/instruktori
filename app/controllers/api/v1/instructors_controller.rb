@@ -14,6 +14,10 @@ module Api
         @instructor = Instructor.find(params[:id])
       end
 
+      def cities
+        render json: Instructor.select("DISTINCT city").map(&:city).compact
+      end
+
     end
   end
 end

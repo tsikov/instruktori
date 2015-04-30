@@ -2,7 +2,11 @@ Rails.application.routes.draw do
 
   namespace :api, defaults: {format: 'json'} do
     namespace :v1 do
-      resources 'instructors'
+      resources 'instructors' do
+        collection do
+          get "cities"
+        end
+      end
       resources 'results'
     end
   end
