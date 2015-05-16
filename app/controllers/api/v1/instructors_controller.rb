@@ -7,8 +7,11 @@ module Api
 
         @page = params[:page].blank? ? 1 : params[:page].to_i
         @city = params[:city].blank? ? "all" : params[:city]
+        @category = params[:category].blank? ? "all" : params[:category]
+
         query = Instructor.all
         query = query.where(city: @city) if @city != "all"
+        query = query.where("categories @> ?", "{#{@category}}") if @category != "all"
 
         @instructors_count = query.count
         @instructors = query.paginate(page: @page)
@@ -20,6 +23,10 @@ module Api
 
       def cities
         render json: Instructor.select("DISTINCT city").map(&:city).compact
+      end
+
+      def categories
+        render json: Instructor.select('unnest(categories) AS categories').pluck(:categories).flatten.uniq
       end
 
     end

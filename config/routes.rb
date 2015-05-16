@@ -5,6 +5,7 @@ Rails.application.routes.draw do
       resources 'instructors' do
         collection do
           get "cities"
+          get "categories"
         end
       end
       resources 'results'

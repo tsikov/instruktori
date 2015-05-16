@@ -16,7 +16,7 @@ instruktori.config(["$stateProvider", "$urlRouterProvider", "$locationProvider",
 
   $stateProvider
   .state("instructors", {
-    url: "/?goto?page?city",
+    url: "/?goto?page?city?category",
     templateUrl: "instructors.html",
     controller: "InstructorsIndexController"
   })
@@ -111,7 +111,10 @@ instruktori.controller("InstructorsIndexController", ["$scope", "$state", "$http
 
   // we store ui related variables in here
   $scope.ui = {
-    showCities: false,
+    show: {
+      categories: false,
+      cities: false
+    }
   };
 
   // TODO: move in a service, because it makes on every controller initialization
@@ -119,6 +122,7 @@ instruktori.controller("InstructorsIndexController", ["$scope", "$state", "$http
   // this may very well never happen if the user
   // doesn't want to filter by city
   $scope.cities = [];
+  $scope.categories = [];
 
   $scope.instructorsData = Instructor.query($state.params);
 
@@ -127,25 +131,28 @@ instruktori.controller("InstructorsIndexController", ["$scope", "$state", "$http
     $state.go("instructors", $scope.params);
   };
 
-  $scope.getCities = function() {
-    $scope.ui.showCities = !$scope.ui.showCities;
+  $scope.get = function(filter) {
+    $scope.ui.show[filter] = !$scope.ui.show[filter];
 
     // don't collect cities for the second time
-    if ($scope.cities.length === 0) {
-      $http.get("/api/v1/instructors/cities").
+    if ($scope[filter].length === 0) {
+      $http.get("/api/v1/instructors/" + filter).
         success(function(data, status, headers, config) {
-          $scope.cities = data;
+          $scope[filter] = data;
         }).
         error(function(data, status, headers, config) {
           // TODO
         });
     }
-
   };
 
-  $scope.selectCity = function(city) {
-    $scope.ui.showCities = false;
-    $scope.params.city = city;
+  $scope.select = function(filter, cityOrCategory) {
+    var singulars = {
+      categories: "category",
+      cities: "city"
+    };
+    $scope.ui.show[filter] = false;
+    $scope.params[singulars[filter]] = cityOrCategory;
     $state.go("instructors", $scope.params);
   };
 

@@ -6,18 +6,21 @@
 </div>
 <br />
 
-<button type="button" class="btn btn-default btn-xs" ng-class="{active: ui.showCities}" ng-click="getCities()">Град <span class="caret"></span></button>
+<button type="button" class="btn btn-default btn-xs" ng-class="{active: ui.showCities}" ng-click="get('cities')">Град <span class="caret"></span></button>
 
-|
-Категория:
-<select>
-  <option value="all">Всички</option>
-</select>
+<button type="button" class="btn btn-default btn-xs" ng-class="{active: ui.showCategories}" ng-click="get('categories')">Категория <span class="caret"></span></button>
 
-<div ng-show="ui.showCities">
+<div ng-show="ui.show.cities">
   Градовете се зареждат...
   <ul>
-    <li ng-repeat="city in cities" ng-click="selectCity(city)">{{ city }}</li>
+    <li ng-repeat="city in cities" ng-click="select('cities', city)">{{ city }}</li>
+  </ul>
+</div>
+
+<div ng-show="ui.show.categories">
+  Категориите се зареждат...
+  <ul>
+    <li ng-repeat="category in categories" ng-click="select('categories', category)">{{ category }}</li>
   </ul>
 </div>
 
