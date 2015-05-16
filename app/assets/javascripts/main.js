@@ -16,7 +16,7 @@ instruktori.config(["$stateProvider", "$urlRouterProvider", "$locationProvider",
 
   $stateProvider
   .state("instructors", {
-    url: "/?goto?page",
+    url: "/?goto?page?city",
     templateUrl: "instructors.html",
     controller: "InstructorsIndexController"
   })
@@ -100,23 +100,54 @@ instruktori.directive("resultsList", ["$window", "Result", "$stateParams", funct
   }
 }]);
 
-instruktori.controller("InstructorsIndexController", ["$scope", "$state", "Instructor", function($scope, $state, Instructor) {
+instruktori.controller("InstructorsIndexController", ["$scope", "$state", "$http", "Instructor", function($scope, $state, $http, Instructor) {
 
+  // the params for quering instructors
   $scope.params = {
+    // TODO: add some typeof "undefined"
     page: $state.params.page,
-    city: "all"
-  }
+    city: $state.params.city
+  };
 
-  $scope.instructorsData = Instructor.query({ page: $state.params.page });
+  // we store ui related variables in here
+  $scope.ui = {
+    showCities: false,
+  };
+
+  // TODO: move in a service, because it makes on every controller initialization
+  // cities are not yet collected from the server
+  // this may very well never happen if the user
+  // doesn't want to filter by city
+  $scope.cities = [];
+
+  $scope.instructorsData = Instructor.query($state.params);
+
   $scope.pageChanged = function(page) {
     $scope.params.page = page;
     $state.go("instructors", $scope.params);
   };
 
-  $scope.cityChanged = function(city) {
+  $scope.getCities = function() {
+    $scope.ui.showCities = !$scope.ui.showCities;
+
+    // don't collect cities for the second time
+    if ($scope.cities.length === 0) {
+      $http.get("/api/v1/instructors/cities").
+        success(function(data, status, headers, config) {
+          $scope.cities = data;
+        }).
+        error(function(data, status, headers, config) {
+          // TODO
+        });
+    }
+
+  };
+
+  $scope.selectCity = function(city) {
+    $scope.ui.showCities = false;
     $scope.params.city = city;
     $state.go("instructors", $scope.params);
-  }
+  };
 
 }]);
 

@@ -6,11 +6,7 @@
 </div>
 <br />
 
-Град:
-<select ng-model="params.city" ng-change="cityChanged(params.city)">
-  <option value="all">Всички</option>
-  <option value="1">София</option>
-</select>
+<button type="button" class="btn btn-default btn-xs" ng-class="{active: ui.showCities}" ng-click="getCities()">Град <span class="caret"></span></button>
 
 |
 Категория:
@@ -18,7 +14,13 @@
   <option value="all">Всички</option>
 </select>
 
-<br />
+<div ng-show="ui.showCities">
+  Градовете се зареждат...
+  <ul>
+    <li ng-repeat="city in cities" ng-click="selectCity(city)">{{ city }}</li>
+  </ul>
+</div>
+
 <br />
 
 <h3>Резултати <span class="label label-default">{{ instructorsData.instructors_count }}</span> </h3>
