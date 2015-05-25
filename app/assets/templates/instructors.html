@@ -28,6 +28,8 @@
 
 <h3>Резултати <span class="label label-default">{{ instructorsData.instructors_count }}</span> </h3>
 
+<instructors-list instructors-data="instructorsData"></instructors-list>
+
 <table class="table table-bordered">
   <thead>
     <tr>
@@ -48,5 +50,4 @@
 </table>
 
 <pagination total-items="instructorsData.instructors_count" max-size="10" ng-model="instructorsData.page" ng-change="pageChanged(instructorsData.page)"></pagination>
-
 
