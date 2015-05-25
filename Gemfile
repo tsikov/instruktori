@@ -23,6 +23,7 @@ gem 'bootstrap-sass', '~> 3.3.4'
 gem 'bower-rails'
 gem 'angular-rails-templates'
 gem 'angular-ui-bootstrap-rails'
+gem "font-awesome-rails"
 gem 'will_paginate', '~> 3.0.6'
 
 gem 'data_sync'
