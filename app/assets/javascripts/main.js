@@ -54,7 +54,7 @@ instruktori.factory("Result", ["$resource", function($resource) {
   });
 }]);
 
-instruktori.directive("resultsList", ["$window", "Result", "$stateParams", function($window, Result, $stateParams) {
+instruktori.directive("resultsList", ["$window", "$stateParams", function($window, $stateParams) {
   return {
     restrict: "E",
     template: "<svg width='850' height='200'></svg>",
@@ -78,9 +78,9 @@ instruktori.directive("resultsList", ["$window", "Result", "$stateParams", funct
 
         svg.call(tip);
 
-        svg.selectAll('rect')
+        svg.selectAll("rect")
         .data(data).enter()
-          .append('rect')
+          .append("rect")
           .attr({
             height: 10,
             width: 10,
@@ -193,7 +193,7 @@ instruktori.controller("InstructorsIndexController", ["$scope", "$state", "$http
   $scope.get = function(filter) {
     $scope.ui.show[filter] = !$scope.ui.show[filter];
 
-    // don't collect cities for the second time
+    // don't collect cities/categories for the second time
     if ($scope[filter].length === 0) {
       $http.get("/api/v1/instructors/" + filter).
         success(function(data, status, headers, config) {
