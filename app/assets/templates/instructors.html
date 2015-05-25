@@ -1,7 +1,7 @@
 <div class="input-group">
-  <input type="text" class="form-control" placeholder="Търси по име на инструктор">
+  <input type="text" class="form-control" placeholder="Търси по име на инструктор" ng-model="params.instructorName">
   <span class="input-group-btn">
-    <button class="btn btn-default" type="button">Търси</button>
+    <button class="btn btn-default" type="button" ng-click="searchByName()">Търси</button>
   </span>
 </div>
 <br />

@@ -12,6 +12,7 @@ module Api
         query = Instructor.all
         query = query.where(city: @city) if @city != "all"
         query = query.where("categories @> ?", "{#{@category}}") if @category != "all"
+        query = query.text_search(params[:instructorName])
 
         @instructors_count = query.count
         @instructors = query.paginate(page: @page)

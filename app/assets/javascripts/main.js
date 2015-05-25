@@ -16,7 +16,7 @@ instruktori.config(["$stateProvider", "$urlRouterProvider", "$locationProvider",
 
   $stateProvider
   .state("instructors", {
-    url: "/?goto?page?city?category",
+    url: "/?goto?page?city?category?instructorName",
     templateUrl: "instructors.html",
     controller: "InstructorsIndexController"
   })
@@ -105,6 +105,7 @@ instruktori.controller("InstructorsIndexController", ["$scope", "$state", "$http
   // the params for quering instructors
   $scope.params = {
     // TODO: add some typeof "undefined"
+    instructorName: $state.params.instructorName,
     page: $state.params.page,
     city: $state.params.city
   };
@@ -153,6 +154,10 @@ instruktori.controller("InstructorsIndexController", ["$scope", "$state", "$http
     };
     $scope.ui.show[filter] = false;
     $scope.params[singulars[filter]] = cityOrCategory;
+    $state.go("instructors", $scope.params);
+  };
+
+  $scope.searchByName = function() {
     $state.go("instructors", $scope.params);
   };
 
