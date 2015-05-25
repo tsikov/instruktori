@@ -30,13 +30,13 @@
 
 <instructors-list instructors-data="instructorsData"></instructors-list>
 
-<table class="table table-bordered">
+<table class="table table-bordered table-hover">
   <thead>
     <tr>
-      <td>Име</td>
-      <td>Резултат</td>
-      <td>Населено място</td>
-      <td>Категории</td>
+      <td width="40%">Име</td>
+      <td width="20%">Резултат</td>
+      <td width="20%">Населено място</td>
+      <td width="20%">Категории</td>
     </tr>
   </thead>
   <tbody>
@@ -48,7 +48,9 @@
       </div>
     </td>
     <td>{{ instructor.city }}</td>
-    <td>{{ instructor.categories }}</td>
+    <td>
+      <span class="label label-primary" ng-repeat="c in instructor.categories">{{ c }}</span>
+    </td>
   </tr>
   </tbody>
 </table>
