@@ -42,7 +42,11 @@
   <tbody>
   <tr ng-repeat="instructor in instructorsData.instructors">
     <td><a href="/instructors/{{ instructor.id }}">{{ instructor.name }}</a></td>
-    <td>{{ instructor.score }}</td>
+    <td>
+      <div class="progress">
+        <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: {{ instructor.score }}%;">{{ instructor.score }} %</div>
+      </div>
+    </td>
     <td>{{ instructor.city }}</td>
     <td>{{ instructor.categories }}</td>
   </tr>

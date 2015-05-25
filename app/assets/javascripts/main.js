@@ -41,6 +41,15 @@ instruktori.factory("Instructor", ["$resource", function($resource) {
     'query': {
       method: "GET",
       isArray: false,
+      transformResponse: function(data) {
+        data = JSON.parse(data);
+
+        data.instructors = data.instructors.map(function(d) {
+          d.score = Math.round(d.score * 100);
+          return d;
+        });
+        return data;
+      }
     }
   });
 }]);
