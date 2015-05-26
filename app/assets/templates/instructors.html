@@ -6,19 +6,6 @@
 </div>
 <br />
 
-<button type="button" class="btn btn-default btn-xs" ng-class="{active: ui.showCities}" ng-click="get('cities')">Град <span class="caret"></span></button>
-
-<button type="button" class="btn btn-default btn-xs" ng-class="{active: ui.showCategories}" ng-click="get('categories')">Категория <span class="caret"></span></button>
-
-<div ng-show="ui.show.cities">
-  Градовете се зареждат...
-  <ul>
-    <li ng-repeat="city in cities" ng-click="select('cities', city)">{{ city }}</li>
-  </ul>
-</div>
-
-<br />
-
 <h3>Резултати <span class="label label-default">{{ instructorsData.instructors_count }}</span> </h3>
 
 <table class="table table-bordered table-hover">
@@ -36,9 +23,14 @@
       </th>
       <th width="20%">
         Населено място
-        <button class="btn btn-default btn-xs pull-right">
-          <span class="caret"></span>
-        </button>
+        <div class="btn-group pull-right">
+          <button type="button" class="btn btn-default dropdown-toggle btn-xs" data-toggle="dropdown" aria-expanded="false" ng-click="get('cities')">
+            <span class="caret"></span>
+          </button>
+          <ul class="dropdown-menu" role="menu">
+            <li ng-repeat="city in cities" ng-click="select('cities', city)"><a href="#">{{ city }}</a></li>
+          </ul>
+        </div>
       </th>
       <th width="20%">
         Категории
