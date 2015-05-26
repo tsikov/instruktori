@@ -8,11 +8,14 @@ module Api
         @page = params[:page].blank? ? 1 : params[:page].to_i
         @city = params[:city].blank? ? "all" : params[:city]
         @category = params[:category].blank? ? "all" : params[:category]
+        @order = params[:scoreOrder].blank? ? "DESC" : params[:scoreOrder]
 
         query = Instructor.all
         query = query.where(city: @city) if @city != "all"
         query = query.where("categories @> ?", "{#{@category}}") if @category != "all"
         query = query.text_search(params[:instructorName])
+
+        query = query.order("score #{@order}")
 
         @instructors_count = query.count
         @instructors = query.paginate(page: @page)

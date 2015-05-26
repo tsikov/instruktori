@@ -33,10 +33,25 @@
 <table class="table table-bordered table-hover">
   <thead>
     <tr>
-      <td width="40%">Име</td>
-      <td width="20%">Резултат</td>
-      <td width="20%">Населено място</td>
-      <td width="20%">Категории</td>
+      <th width="40%">Име</th>
+      <th width="20%">
+        <abbr title="Резултатът е процентно отношение на успелите/неуспелите. Резултат от 100% означава, че всички курсисти на съответния инструктор са си взели успешно изпитите от първия път.">Резултат</abbr>
+
+        <div class="btn-group pull-right">
+          <label class="btn btn-default btn-xs" ng-model="params.scoreOrder" btn-radio="'desc'" uncheckable ng-change="refresh()"><i class="fa fa-sort-amount-desc"></i></label>
+          <label class="btn btn-default btn-xs" ng-model="params.scoreOrder" btn-radio="'asc'" uncheckable ng-change="refresh()"><i class="fa fa-sort-amount-asc"></i></label>
+        </div>
+
+      </th>
+      <th width="20%">
+        Населено място
+        <button class="btn btn-default btn-xs pull-right">
+          <span class="caret"></span>
+        </button>
+      </th>
+      <th width="20%">
+        Категории
+      </th>
     </tr>
   </thead>
   <tbody>

@@ -16,7 +16,7 @@ instruktori.config(["$stateProvider", "$urlRouterProvider", "$locationProvider",
 
   $stateProvider
   .state("instructors", {
-    url: "/?goto?page?city?category?instructorName",
+    url: "/?goto?page?city?category?instructorName?scoreOrder",
     templateUrl: "instructors.html",
     controller: "InstructorsIndexController"
   })
@@ -58,7 +58,7 @@ instruktori.factory("Result", ["$resource", function($resource) {
   return $resource('/api/v1/results/:id', null, {
     'query': {
       method: "GET",
-      isArray: false,
+      isArray: false
     }
   });
 }]);
@@ -173,6 +173,7 @@ instruktori.controller("InstructorsIndexController", ["$scope", "$state", "$http
   $scope.params = {
     // TODO: add some typeof "undefined"
     instructorName: $state.params.instructorName,
+    scoreOrder: typeof $state.params.scoreOrder === "undefined" ? "desc" : $state.params.scoreOrder,
     page: $state.params.page,
     city: $state.params.city
   };
@@ -194,21 +195,16 @@ instruktori.controller("InstructorsIndexController", ["$scope", "$state", "$http
 
   $scope.instructorsData = Instructor.query($state.params);
 
-  $scope.pageChanged = function(page) {
-    $scope.params.page = page;
-    $state.go("instructors", $scope.params);
-  };
-
   $scope.get = function(filter) {
     $scope.ui.show[filter] = !$scope.ui.show[filter];
 
     // don't collect cities/categories for the second time
     if ($scope[filter].length === 0) {
-      $http.get("/api/v1/instructors/" + filter).
-        success(function(data, status, headers, config) {
+      $http.get("/api/v1/instructors/" + filter)
+        .success(function(data, status, headers, config) {
           $scope[filter] = data;
-        }).
-        error(function(data, status, headers, config) {
+        })
+        .error(function(data, status, headers, config) {
           // TODO
         });
     }
@@ -224,7 +220,17 @@ instruktori.controller("InstructorsIndexController", ["$scope", "$state", "$http
     $state.go("instructors", $scope.params);
   };
 
+  $scope.pageChanged = function(page) {
+    $scope.params.page = page;
+    $scope.refresh();
+  };
+
   $scope.searchByName = function() {
+    $scope.params.page = 1;
+    $scope.refresh();
+  };
+
+  $scope.refresh = function() {
     $state.go("instructors", $scope.params);
   };
 
