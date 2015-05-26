@@ -1,8 +1,3 @@
-<div class="input-group">
-  <input type="text" class="form-control" placeholder="Търси по име на инструктор" ng-model="params.instructorName">
-  <span class="input-group-btn">
-    <button class="btn btn-default" type="button" ng-click="searchByName()">Търси</button>
-  </span>
 </div>
 <br />
 
@@ -11,7 +6,14 @@
 <table class="table table-bordered table-hover">
   <thead>
     <tr>
-      <th width="40%">Име</th>
+      <th width="40%">
+        <div class="input-group input-group-sm">
+          <input type="text" class="form-control" placeholder="Име на инструктор" ng-model="params.instructorName">
+          <span class="input-group-btn">
+            <button class="btn btn-default" type="button" ng-click="searchByName()">Търси</button>
+          </span>
+        </div>
+      </th>
       <th width="20%">
         <abbr title="Резултатът е процентно отношение на успелите/неуспелите. Резултат от 100% означава, че всички курсисти на съответния инструктор са си взели успешно изпитите от първия път.">Резултат</abbr>
 
