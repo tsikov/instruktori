@@ -17,13 +17,6 @@
   </ul>
 </div>
 
-<div ng-show="ui.show.categories">
-  Категориите се зареждат...
-  <ul>
-    <li ng-repeat="category in categories" ng-click="select('categories', category)">{{ category }}</li>
-  </ul>
-</div>
-
 <br />
 
 <h3>Резултати <span class="label label-default">{{ instructorsData.instructors_count }}</span> </h3>
@@ -51,6 +44,14 @@
       </th>
       <th width="20%">
         Категории
+        <div class="btn-group pull-right">
+          <button type="button" class="btn btn-default dropdown-toggle btn-xs" data-toggle="dropdown" aria-expanded="false" ng-click="get('categories')">
+            <span class="caret"></span>
+          </button>
+          <ul class="dropdown-menu" role="menu">
+            <li ng-repeat="category in categories" ng-click="select('categories', category)"><a href="#">{{ category }}</a></li>
+          </ul>
+        </div>
       </th>
     </tr>
   </thead>
