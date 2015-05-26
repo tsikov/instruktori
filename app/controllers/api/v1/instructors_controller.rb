@@ -5,15 +5,15 @@ module Api
 
       def index
 
-        @page = params[:page].blank? ? 1 : params[:page].to_i
-        @city = params[:city].blank? ? "all" : params[:city]
-        @category = params[:category].blank? ? "all" : params[:category]
-        @order = params[:scoreOrder].blank? ? "DESC" : params[:scoreOrder]
+        @page = instructor_params[:page].blank? ? 1 : instructor_params[:page].to_i
+        @city = instructor_params[:city].blank? ? "all" : instructor_params[:city]
+        @category = instructor_params[:category].blank? ? "all" : instructor_params[:category]
+        @order = instructor_params[:scoreOrder].blank? ? "DESC" : instructor_params[:scoreOrder]
 
         query = Instructor.all
         query = query.where(city: @city) if @city != "all"
         query = query.where("categories @> ?", "{#{@category}}") if @category != "all"
-        query = query.text_search(params[:instructorName])
+        query = query.text_search(instructor_params[:instructorName])
 
         query = query.order("score #{@order}")
 
@@ -33,10 +33,12 @@ module Api
         render json: Instructor.select('unnest(categories) AS categories').pluck(:categories).flatten.uniq
       end
 
+      def instructor_params
+        params.slice(:id, :page, :city, :category, :scoreOrder, :instructorName)
+      end
+
     end
   end
 end
-
-# TODO whitelist
 
 
