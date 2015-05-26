@@ -109,64 +109,6 @@ instruktori.directive("resultsList", ["$window", "$stateParams", function($windo
   }
 }]);
 
-instruktori.directive("instructorsList", ["$window", function($window) {
-  return {
-    restrict: "E",
-    template: "<svg width='100%' height='500'></svg>",
-    scope: {
-      instructorsData: "="
-    },
-    link: function(scope, element, attrs) {
-      var d3 = $window.d3;
-      var rawSvg = element.find("svg")[0];
-      var svg = d3.select(rawSvg);
-
-      function render(data) {
-
-        var rects = svg.selectAll("rect");
-
-        // names
-        svg.selectAll("text")
-        .data(data).enter()
-          .append("text")
-          .attr({
-            x: 10,
-            y: function(d, i) { return i * 20 },
-            fill: "black"
-          })
-          .text(function(d) { return d.name });
-
-        // score
-        rects.data(data).enter()
-          .append("rect")
-          .attr({
-            x: 400,
-            y: function(d, i)  { return (i * 20) },
-            width: function(d) { return d.score * 300 },
-            height: 10,
-            fill: "green"
-          });
-
-        rects.data(data).enter()
-          .append("rect")
-          .attr({
-            x: function(d, i)  { return 400 + (d.score * 300) },
-            y: function(d, i)  { return i * 20 },
-            width: function(d) { return 300 - (d.score * 300) },
-            height: 10,
-            fill: "red"
-          });
-
-      };
-
-      scope.instructorsData.$promise.then(function(data) {
-        render(data.instructors);
-      });
-
-    }
-  }
-}]);
-
 instruktori.controller("InstructorsIndexController", ["$scope", "$state", "$http", "Instructor", function($scope, $state, $http, Instructor) {
 
   // the params for quering instructors
