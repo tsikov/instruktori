@@ -13,8 +13,6 @@ set :rails_env,       'production'
 set :puma_init_active_record, true
 set :nginx_server_name, 'instruktori.info *.instruktori.info'
 
-set :server, ask('Enter the server:')
-
 namespace :deploy do
   namespace :nginx do
     desc 'Generate an Nginx configuration file'
@@ -28,3 +26,4 @@ end
 
 after 'deploy:check', 'deploy:nginx:config'
 after 'deploy:check', 'puma:config'
+
