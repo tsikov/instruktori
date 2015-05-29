@@ -52,3 +52,8 @@ group :production, :staging do
   gem "rails_stdout_logging"
   gem "rails_serve_static_assets"
 end
+
+
+# fetching stuff
+gem "mechanize"
+
