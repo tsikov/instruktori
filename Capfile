@@ -8,6 +8,7 @@ require 'capistrano/puma'
 require 'capistrano/puma/jungle'
 require 'capistrano/puma/nginx'
 require 'capistrano/rbenv'
+require "whenever/capistrano"
 
 set :rbenv_ruby, '2.2.1'
 

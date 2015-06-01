@@ -12,6 +12,7 @@ set :keep_releases,   20
 set :rails_env,       'production'
 set :puma_init_active_record, true
 set :nginx_server_name, 'instruktori.info *.instruktori.info'
+set :whenever_identifier, ->{ "#{fetch(:application)}_#{fetch(:stage)}" }
 
 namespace :deploy do
   namespace :nginx do
