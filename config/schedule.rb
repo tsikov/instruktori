@@ -1,4 +1,4 @@
-set :output, "#{Whenever.path}/log/cron.log"
+set :output, "log/cron.log"
 
 every :day do
   rake "update:results"
