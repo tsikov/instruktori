@@ -8,7 +8,7 @@ end
 
 # create folders if needed
 %w(html txt txt_patched json).each do |folder|
-  directory "public/system/#{folder}"
+  FileUtils.mkdir_p "public/system/#{folder}"
 end
 
 # all dependancies are constructed from the html files
