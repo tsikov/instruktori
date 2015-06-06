@@ -116,7 +116,7 @@ task :persist_new_results => :environment do |t|
   end
 end
 
-task :persist_instructors do |t|
+task :persist_instructors => :environment do |t|
   require 'csv'
 
   CSV.foreach("public/system/instructors.csv").drop(1).each_with_index do |row, idx|
