@@ -18,19 +18,19 @@ patched_txt_files = txt_files.pathmap("%{txt,txt_patched}d/%n_patched.txt")
 json_files = patched_txt_files.pathmap("%{txt_patched,json}d/%{_patched,}n.json")
 
 desc "Convert the html to txt files"
-task :to_txt => ["public/system/txt", txt_files]
+task :to_txt => txt_files
 rule ".txt" => ->(f) { f.pathmap("%{txt,html}X.html") } do |t|
   sh "ruby lib/assets/html2txt.rb #{t.source} > #{t.name}"
 end
 
 desc "Patches the txt files"
-task :patch_txt => ["public/system/txt_patched", patched_txt_files]
+task :patch_txt => patched_txt_files
 rule(/_patched\.txt/ => ->(f) { f.pathmap("%{txt_patched,txt}d/%{_patched,}n.txt") } ) do |t|
   sh "ruby lib/assets/patch_txt.rb #{t.source} > #{t.name}"
 end
 
 desc "Converts the patched txt files to json files"
-task :to_json => ["public/system/json", json_files]
+task :to_json => json_files
 rule ".json" => ->(f) { f.pathmap("%{json,txt_patched}d/%n_patched.txt") } do |t|
   sh "ruby lib/assets/txt2json.rb #{t.source} > #{t.name}"
 end
@@ -126,7 +126,7 @@ end
 
 task :populate_db => [:persist_instructors, :patch_instructors, :persist_all_results]
 
-task :fetch_new_html_files => ["2015.html", "public/system/html"] do
+task :fetch_new_html_files => ["2015.html"] do
   sh "ruby lib/assets/fetch_protocols.rb #{Rails.root.to_s}"
 end
 
