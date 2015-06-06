@@ -117,7 +117,12 @@ task :persist_new_results => :environment do |t|
 end
 
 task :persist_instructors do |t|
-  sh "ruby lib/assets/persist_instructors.rb storage/instructors.csv"
+  require 'csv'
+
+  CSV.foreach("public/storage/instructors.csv").drop(1).each_with_index do |row, idx|
+    ins = Instructor.create!({ name: row[1], city: row[2], address: row[3], phone: row[4], categories: row[5].split(", "), province: row[6], permit: row[0].to_i })
+    puts "Instructor with id: #{ins.id} (#{ins.name}) was created."
+  end
 end
 
 task :patch_instructors do |t|
