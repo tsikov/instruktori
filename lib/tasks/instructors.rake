@@ -20,31 +20,49 @@ def create_instructor(name)
   end
 end
 
-task :persist_instructors => :environment do |t|
-  require 'csv'
+namespace :instructors do
 
-  CSV.foreach("public/system/instructors.csv").drop(1).each_with_index do |row, idx|
-    ins = Instructor.create!({ name: row[1], city: row[2], address: row[3], phone: row[4], categories: row[5].split(", "), province: row[6], permit: row[0].to_i })
-    puts "Instructor with id: #{ins.id} (#{ins.name}) was created."
+  file "instructors-#{Time.now.to_s[0..9]}.html" do |t|
+    sh "curl -o instructors-#{Time.now.to_s[0..9]}.html http://www.rta.government.bg/index.php?page=scategories&scategory=teoria#top"
   end
+
+  task :update => ["instructors-#{Time.now.to_s[0..9]}.html"] do |t|
+    require "mechanize"
+
+    agent = Mechanize.new
+    p t.source
+    page = agent.get("file:///#{Rails.root}/#{t.source}")
+    links = page.at("table div.hj_content").search("hr")
+    p links
+
+  end
+
+  task :persist => :environment do |t|
+    require 'csv'
+
+    CSV.foreach("public/system/instructors.csv").drop(1).each_with_index do |row, idx|
+      ins = Instructor.create!({ name: row[1], city: row[2], address: row[3], phone: row[4], categories: row[5].split(", "), province: row[6], permit: row[0].to_i })
+      puts "Instructor with id: #{ins.id} (#{ins.name}) was created."
+    end
+  end
+
+  task :patch => :environment do |t|
+    rename_instructor "'ВАЛЕНТИ АУТО'' ЕООД", "\"ВАЛЕНТИ АУТО\" ЕООД"
+    rename_instructor "ПРОФЕСИОНАЛНА  АГРОТЕХНИЧЕСКА ГИМНАЗИЯ\"Н. Й. ВАПЦАРОВ\"", "ПРОФЕСИОНАЛНА АГРОТЕХНИЧЕСКА ГИМНАЗИЯ \"Н. Й. ВАПЦАРОВ\""
+
+    # Not found in list -> ask the institutions about these
+    create_instructor "\"МЕРИДИАН 888\" ЕООД"
+    create_instructor "ЕТ \"АПИС - МАРИЯ СТОЯНОВА\""
+    create_instructor "\"ВИТА - 6\" АД"
+    create_instructor "ИЗПЪЛНИТЕЛНА АГЕНЦИЯ АВТОМОБИЛНА АДМИНИСТРАЦИЯ"
+    create_instructor "ПРОФЕСИОНАЛНА ГИМНАЗИЯ"     # perhaps known - should ask the gov.
+    create_instructor "\"СТРЕЛЕЦ - 09\" ЕООД"
+    create_instructor "ЕТ \"ПАЛАС - КИРЧО СИМИТЧИЕВ\""
+    create_instructor "ЕТ \"КИРИЛ БЪЧВАРОВ\""
+    create_instructor "ЕТ \"ОЛИМП - 99 - ДИМЧО ИЛИЕВ\""
+    create_instructor "\"ЗЕНИТ - МВ\" ООД"
+    create_instructor "\"ТОМОВ БИЗНЕС ГРУП\" ЕООД"
+    create_instructor "БОРИ ДД"    # perhaps should rename to БОРИ 11???
+  end
+
 end
-
-task :patch_instructors => :environment do |t|
-  rename_instructor "'ВАЛЕНТИ АУТО'' ЕООД", "\"ВАЛЕНТИ АУТО\" ЕООД"
-  rename_instructor "ПРОФЕСИОНАЛНА  АГРОТЕХНИЧЕСКА ГИМНАЗИЯ\"Н. Й. ВАПЦАРОВ\"", "ПРОФЕСИОНАЛНА АГРОТЕХНИЧЕСКА ГИМНАЗИЯ \"Н. Й. ВАПЦАРОВ\""
-
-  # Not found in list -> ask the institutions about these
-  create_instructor "\"МЕРИДИАН 888\" ЕООД"
-  create_instructor "ЕТ \"АПИС - МАРИЯ СТОЯНОВА\""
-  create_instructor "\"ВИТА - 6\" АД"
-  create_instructor "ИЗПЪЛНИТЕЛНА АГЕНЦИЯ АВТОМОБИЛНА АДМИНИСТРАЦИЯ"
-  create_instructor "ПРОФЕСИОНАЛНА ГИМНАЗИЯ"     # perhaps known - should ask the gov.
-  create_instructor "\"СТРЕЛЕЦ - 09\" ЕООД"
-  create_instructor "ЕТ \"ПАЛАС - КИРЧО СИМИТЧИЕВ\""
-  create_instructor "ЕТ \"КИРИЛ БЪЧВАРОВ\""
-  create_instructor "ЕТ \"ОЛИМП - 99 - ДИМЧО ИЛИЕВ\""
-  create_instructor "\"ЗЕНИТ - МВ\" ООД"
-  create_instructor "\"ТОМОВ БИЗНЕС ГРУП\" ЕООД"
-  create_instructor "БОРИ ДД"    # perhaps should rename to БОРИ 11???
-end
-
