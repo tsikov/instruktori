@@ -1,7 +1,7 @@
 
 <div class="row">
   <div class="col-sm-6">
-    <h3>Резултати <span class="label label-default">{{ instructorsData.instructors_count }}</span> </h3>
+    <h3>Резултати <span class="label label-primary">{{ instructorsData.instructors_count }}</span> </h3>
   </div>
   <div class="col-sm-6">
     <pagination total-items="instructorsData.instructors_count" max-size="10" ng-model="instructorsData.page" ng-change="pageChanged(instructorsData.page)" class="pull-right"></pagination>
@@ -54,7 +54,7 @@
   </thead>
   <tbody>
   <tr ng-repeat="instructor in instructorsData.instructors">
-    <td><a href="/instructors/{{ instructor.id }}">{{ instructor.name }}</a></td>
+    <td><a href="/instructors/{{ instructor.id }}">{{ instructor.name }}</a> <div class="label label-primary"><abbr title="Това число показва на базата на колко изпита е направена оценката">{{ instructor.results_count }}</abbr></div></td>
     <td>
       <div class="progress">
         <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: {{ instructor.score }}%;">{{ instructor.score }} %</div>
