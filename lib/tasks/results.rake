@@ -35,12 +35,6 @@ rule ".json" => ->(f) { f.pathmap("%{json,txt_patched}d/%n_patched.txt") } do |t
   sh "ruby lib/assets/txt2json.rb #{t.source} > #{t.name}"
 end
 
-task :persist_all_results => json_files do |t|
-  t.sources.each do |source|
-    sh "ruby lib/assets/persist_results.rb #{source}"
-  end
-end
-
 task :persist_new_results => :environment do |t|
   all_dates_db = Exam.select("DISTINCT date").map(&:date).map { |d| d.strftime ("%d.%m.%Y") }
   all_dates_files = html_files.pathmap("%n")
