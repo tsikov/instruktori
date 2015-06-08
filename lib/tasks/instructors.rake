@@ -65,4 +65,23 @@ namespace :instructors do
     create_instructor "БОРИ ДД"    # perhaps should rename to БОРИ 11???
   end
 
+  task :update_score => :environment do |t|
+
+    Instructor.all.each do |i|
+      results = i.results.map(&:result).keep_if { |r| r.in? [0, 1] }
+
+      if results.empty?
+        i.score = 0
+      else
+        # 1 -, because 1 means "failure"
+        score = 1 - results.sum.to_f/results.count
+        i.score = score
+      end
+
+      i.save
+      puts "Score #{i.score} for instructor with id #{i.id} saved."
+    end
+
+  end
+
 end
